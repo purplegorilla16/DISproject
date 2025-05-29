@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Movie Rating</title>
+</head>
+
+<body>
+    <h1>Rate a Movie</h1>
+
+    <form method="POST">
+        <label for="title">Movie Title:</label>
+        <input type="text" name="title" required>
+
+        <label for="rating">Rating (1–10):</label>
+        <input type="number" name="rating" min="1" max="10" required>
+
+        <label for="genre_id">Genre:</label>
+        <select name="genre_id" required>
+            {% for genre in genres %}
+            <option value="{{ genre['id'] }}">{{ genre['genre_name'] }}</option>
+            {% endfor %}
+        </select>
+
+        <input type="submit" value="Add">
+    </form>
+
+    <h2>Current Movies</h2>
+    <table border="1">
+        <tr>
+            <th>Title</th>
+            <th>Genre</th>
+            <th>Rating</th>
+        </tr>
+        {% for movie in movies %}
+        <tr>
+            <td>{{ movie[0] }}</td> {# title #}
+            <td>{{ movie[1] }}</td> {# genre name #}
+            <td>{{ movie[2] }}</td> {# rating #}
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+
+</html>
