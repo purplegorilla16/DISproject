@@ -1,55 +1,22 @@
 import sqlite3
 
 def get_connection():
-    conn = sqlite3.connect('movies.db', timeout=10)  # Tilføjet timeout for at undgå "database is locked"
+    conn = sqlite3.connect('movies.db', timeout=10)
     conn.row_factory = sqlite3.Row
     return conn
 
-def init_db():
+def init_ratings():
     conn = get_connection()
+    cur = conn.cursor()
 
-    # Drop tables to reset on each run
-    conn.execute('DROP TABLE IF EXISTS movies')
-    conn.execute('DROP TABLE IF EXISTS genres')
-
-    # Create genres table
-    conn.execute('''
-        CREATE TABLE genres (
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS ratings (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            genre_name TEXT NOT NULL UNIQUE
+            movie_id INTEGER NOT NULL,
+            user_rating INTEGER CHECK(user_rating BETWEEN 1 AND 10),
+            FOREIGN KEY (movie_id) REFERENCES movies(id)
         )
-    ''')
-
-    # Create movies table with foreign key to genres
-    conn.execute('''
-        CREATE TABLE movies (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            title TEXT NOT NULL UNIQUE,
-            rating INTEGER,
-            genre_id INTEGER NOT NULL,
-            FOREIGN KEY (genre_id) REFERENCES genres(id)
-        )
-    ''')
-
-    c = conn.cursor()
-
-    # Insert initial genres
-    genres = ['Action', 'Drama', 'Comedy']
-    for genre in genres:
-        c.execute('INSERT OR IGNORE INTO genres (genre_name) VALUES (?)', (genre,))
-
-    # Insert initial movies with NULL ratings
-    movies = [
-        ('The Dark Knight', 'Action'),
-        ('The Godfather', 'Drama'),
-        ('Superbad', 'Comedy')
-    ]
-
-    for (title, genre_name) in movies:
-        c.execute('''
-            INSERT OR IGNORE INTO movies (title, rating, genre_id)
-            VALUES (?, NULL, (SELECT id FROM genres WHERE genre_name = ?))
-        ''', (title, genre_name))
+    """)
 
     conn.commit()
     conn.close()

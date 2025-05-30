@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Browse Movies</title>
+    <style>
+        .container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .box {
+            width: 48%;
+            padding: 1em;
+            border: 1px solid #ccc;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 0.5em;
+            border: 1px solid #999;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>IMDb Top 250 – Browse</h1>
+
+    <div class="container">
+        <div class="box">
+            <h2>Rated Movies</h2>
+            <p>(Kommer snart)</p>
+        </div>
+
+        <div class="box">
+            <h2>All Movies</h2>
+            <table>
+                <tr>
+                    <th>Title</th>
+                    <th>Year</th>
+                    <th>IMDb</th>
+                    <th>Runtime</th>
+                </tr>
+                {% for movie in movies %}
+                <tr>
+                    <td>{{ movie["title"] }}</td>
+                    <td>{{ movie["year"] }}</td>
+                    <td>{{ movie["rating"] }}</td>
+                    <td>{{ movie["runtime"] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>
