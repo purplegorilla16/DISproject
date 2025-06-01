@@ -14,6 +14,9 @@ def init_ratings():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             movie_id INTEGER NOT NULL,
             user_rating INTEGER CHECK(user_rating BETWEEN 1 AND 10),
+            user_review TEXT,
+            username TEXT NOT NULL,
+            UNIQUE (movie_id, username),
             FOREIGN KEY (movie_id) REFERENCES movies(id)
         )
     """)
