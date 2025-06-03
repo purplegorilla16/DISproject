@@ -5,6 +5,9 @@ from database import get_connection
 
 movie_bp = Blueprint("movie", __name__)
 
+def is_valid(username):
+    return re.fullmatch(r"[A-Za-z0-9_]{3,20}", username) is not None
+
 @movie_bp.route("/", methods=["GET", "POST"])
 def start():
     if request.method == "POST":
