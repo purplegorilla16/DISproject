@@ -21,3 +21,5 @@ Open a browser and visit the sit http://127.0.0.1:5000
 
 Once you enter the webb app, you can either register as a new user og choose among existing users. 
 Afterwards you can choose among the top rated movies from and imdb datalist and give them your own rating and review. The rating will be saved in your username.
+
+If you wish to restart and remove the existing users, you can delete the file movies.db.
