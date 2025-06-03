@@ -1,4 +1,4 @@
-from database import init_ratings
+from database import init_db
 
-init_ratings()
+init_db()
 print("✅ ratings-table created.")
